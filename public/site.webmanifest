@@ -1,0 +1,12 @@
+{
+  "name": "Active",
+  "short_name": "Active",
+  "description": "Tell us what you need. Find someone nearby who does it.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "categories": ["business", "utilities"],
+  "lang": "en"
+}

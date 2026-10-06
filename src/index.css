@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/*  Design tokens                                                      */
+/*  Calm cool-white canvas, deep navy ink, ONE green that means "go".  */
+/*  Green is reserved for the single primary action on each screen.    */
+/* ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    --background: 210 60% 98%;
+    --foreground: 213 55% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 213 55% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 55% 11%;
+
+    --primary: 154 83% 33%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 213 45% 94%;
+    --secondary-foreground: 213 55% 11%;
+
+    --muted: 210 40% 95%;
+    --muted-foreground: 215 16% 44%;
+
+    --accent: 152 55% 94%;
+    --accent-foreground: 154 83% 22%;
+
+    --destructive: 0 78% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 213 33% 91%;
+    --input: 213 32% 85%;
+    --ring: 154 83% 33%;
+
+    --radius: 1rem;
+
+    --shadow-card: 0 1px 2px hsl(213 55% 11% / 0.04), 0 10px 28px -14px hsl(213 55% 11% / 0.12);
+    --shadow-pop: 0 2px 4px hsl(213 55% 11% / 0.04), 0 18px 36px -16px hsl(213 55% 11% / 0.2);
+    --shadow-cta: 0 10px 22px -10px hsl(154 83% 33% / 0.65);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 213 40% 7%;
+    --foreground: 210 30% 95%;
+    --card: 213 34% 11%;
+    --card-foreground: 210 30% 95%;
+    --popover: 213 34% 11%;
+    --popover-foreground: 210 30% 95%;
+    --primary: 154 70% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 213 28% 17%;
+    --secondary-foreground: 210 30% 95%;
+    --muted: 213 26% 15%;
+    --muted-foreground: 213 15% 65%;
+    --accent: 154 30% 16%;
+    --accent-foreground: 154 60% 80%;
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 213 24% 19%;
+    --input: 213 24% 22%;
+    --ring: 154 70% 40%;
+    --shadow-card: 0 1px 2px hsl(0 0% 0% / 0.3), 0 10px 28px -14px hsl(0 0% 0% / 0.5);
+    --shadow-pop: 0 18px 36px -16px hsl(0 0% 0% / 0.6);
+    --shadow-cta: 0 10px 22px -10px hsl(154 70% 40% / 0.5);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: hsl(var(--primary) / 0.18);
+  }
+  /* 16px inputs stop iOS Safari from zooming the page on focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Shared building blocks (used by every page)                        */
+/* ------------------------------------------------------------------ */
+@layer components {
+  /* Buttons — 52px tall minimum so thumbs hit them first time */
+  .btn {
+    @apply inline-flex min-h-[52px] select-none items-center justify-center gap-2 rounded-2xl px-6 text-[15px] font-bold tracking-wide transition duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25 disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90;
+    box-shadow: var(--shadow-cta);
+  }
+  .btn-primary:disabled {
+    box-shadow: none;
+  }
+  .btn-outline {
+    @apply border-[1.5px] border-primary bg-card text-primary hover:bg-primary/5;
+  }
+  .btn-neutral {
+    @apply border border-input bg-card text-foreground hover:bg-muted;
+  }
+  .btn-danger-soft {
+    @apply border border-destructive/25 bg-destructive/10 text-destructive hover:bg-destructive/15;
+  }
+
+  /* Surfaces */
+  .surface {
+    @apply rounded-3xl border border-border/80 bg-card;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Text fields */
+  .field {
+    @apply flex min-h-[56px] items-center gap-3 rounded-2xl border border-input bg-card px-4 transition duration-150 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/15;
+  }
+  .field-input {
+    @apply w-full min-w-0 bg-transparent text-foreground outline-none placeholder:text-muted-foreground/70;
+  }
+
+  /* Chips */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20;
+  }
+  .chip-tag {
+    @apply inline-flex items-center rounded-full border border-border bg-muted/70 px-3.5 py-1.5 text-[13px] font-medium text-foreground/80;
+  }
+
+  .alert-error {
+    @apply flex items-start gap-2.5 rounded-2xl border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive;
+  }
+  .alert-warn {
+    @apply rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3.5 text-sm text-amber-800;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* One deliberate motion: pin drops in on the home + empty states */
+@keyframes pin-drop {
+  0% {
+    transform: translateY(-14px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(3px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.pin-drop {
+  animation: pin-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Confirmation pop (rating sent, link sent) */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.pop-in {
+  animation: pop-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* New chat bubble arrives */
+@keyframes bubble-in {
+  from {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.bubble-in {
+  animation: bubble-in 0.22s ease-out both;
+}
